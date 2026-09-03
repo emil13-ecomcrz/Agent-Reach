@@ -1,6 +1,24 @@
 # Offer Brief — Bellenoor Retinal Shot
 
-Swedish market · Meta cold traffic · v1, September 2026
+**Document type:** Offer strategy brief (how we sell it)
+**Product:** Bellenoor Retinal Shot
+**Market:** Sweden · Swedish-language customer
+**Status:** CURRENT, with one exception — the "Belief Chains" section is SUPERSEDED by `03-belief-chain.md`.
+**Version:** v1 · September 2026
+**Read this:** second, after the avatar.
+**Related:** `01-avatar-maria-47.md`, `03-belief-chain.md`, `05-page-audit.md`
+
+**Core strategic calls in this document, in one line each:**
+- Awareness: solution-aware → lead with the MECHANISM, never with the product.
+- Sophistication: Stage 4 tipping into 5 → a new mechanism plus identification, never a bigger claim.
+- Big idea: "Det var aldrig fel på ditt serum. Det kom bara aldrig in."
+- UMP (problem): Ytfällan — the surface trap.
+- UMS (solution): Shot-effekten — 200 000 mikrokanaler.
+
+> Items marked **[VERIFY]** are NOT cleared for publication. They depend on a person, a study or
+> an origin story that has not been confirmed. Do not treat them as facts.
+
+---
 
 > Built on the avatar sheet and the page audit. Anything marked **[VERIFY]** needs a real answer
 > from you or from the Deep Research pass before it goes on a page — mostly because it's a claim
@@ -296,6 +314,10 @@ run it as an **ingredient** story ("två upptäckter, två världsdelar") rather
 ---
 
 ## Belief Chains
+
+> **SUPERSEDED.** These eleven beliefs were compressed to the six load-bearing ones in
+> `03-belief-chain.md`. Use that file. The eleven are kept here only to show the working —
+> where a belief went, and why it was cut or absorbed.
 
 She has to move through these in order. Skip one and the sale dies there — which is also the
 running order of the sales page.

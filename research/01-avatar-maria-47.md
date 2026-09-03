@@ -1,5 +1,20 @@
 # Avatar Sheet — Bellenoor Retinal Shot
 
+**Document type:** Customer avatar (who we are selling to)
+**Product:** Bellenoor Retinal Shot — retinaldehyde serum, 2 × 15 ml, 349/529/698 kr
+**Market:** Sweden. The customer is Swedish-speaking; all customer-facing copy is in Swedish.
+**Status:** CURRENT — but see the warning below. Every quote in this file is INVENTED, not harvested.
+**Version:** v1 · September 2026
+**Read this:** first, before the offer brief or the belief chain.
+**Related:** `02-offer-brief-ytfallan.md`, `03-belief-chain.md`, `04-deep-research-prompt.md`
+
+> **Rule for anyone (human or model) using this file:** the quotes in the language sections are
+> constructed placeholders written to sound like the avatar. They are NOT real customer quotes.
+> Never reproduce them as testimonials, reviews, or evidence of what customers said. They are
+> there to show the *shape* of the language the real research must supply.
+
+---
+
 **Primary avatar: "Maria, 47"** · Swedish market · v1, September 2026
 
 > **STATUS — READ THIS FIRST.** This sheet is built from the Bellenoor sales page, its on-page

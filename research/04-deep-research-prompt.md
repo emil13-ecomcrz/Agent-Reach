@@ -1,5 +1,17 @@
 # Deep Research Prompt — Bellenoor Retinal Shot
 
+**Document type:** Research brief — a prompt to be run, not a source of facts
+**Product:** Bellenoor Retinal Shot
+**Status:** NOT YET RUN. This file contains no findings. It describes the research still to be done.
+**Version:** v1 · September 2026
+**Related:** `01-avatar-maria-47.md` (which this research will upgrade from v1 to v2)
+
+> **Important:** nothing in this file is evidence about the market. It is a set of instructions
+> for gathering that evidence. When the research is run, its output becomes a new document and
+> the avatar sheet's constructed quotes get replaced with real ones.
+
+---
+
 > Paste everything below the line into OpenAI Deep Research.
 
 ---
