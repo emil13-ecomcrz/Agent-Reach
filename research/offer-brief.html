@@ -1,0 +1,758 @@
+<title>Ytfällan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+
+<style>
+  :root {
+    --ground:        #F2F4EF;
+    --surface:       #FDFDFB;
+    --surface-sunk:  #E9ECE3;
+    --ink:           #161A16;
+    --ink-soft:      #4B534B;
+    --ink-faint:     #7C857B;
+    --rule:          #D3D8CA;
+    --rule-soft:     #E2E6DA;
+    --accent:        #5E7010;
+    --accent-bright: #C3D63C;
+    --accent-wash:   #EAF0C9;
+    --flag:          #9A4B24;
+    --flag-wash:     #F6E7DD;
+
+    --f-display: "Newsreader", "Iowan Old Style", Georgia, serif;
+    --f-body:    "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+    --f-mono:    "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+    --measure: 64ch;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:        #12140F;
+      --surface:       #191C15;
+      --surface-sunk:  #21251C;
+      --ink:           #E8EBDF;
+      --ink-soft:      #AEB5A5;
+      --ink-faint:     #838B7B;
+      --rule:          #2E3327;
+      --rule-soft:     #23271E;
+      --accent:        #C3D63C;
+      --accent-bright: #D5E663;
+      --accent-wash:   #262B15;
+      --flag:          #DB9366;
+      --flag-wash:     #2B1D13;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground:        #12140F;
+    --surface:       #191C15;
+    --surface-sunk:  #21251C;
+    --ink:           #E8EBDF;
+    --ink-soft:      #AEB5A5;
+    --ink-faint:     #838B7B;
+    --rule:          #2E3327;
+    --rule-soft:     #23271E;
+    --accent:        #C3D63C;
+    --accent-bright: #D5E663;
+    --accent-wash:   #262B15;
+    --flag:          #DB9366;
+    --flag-wash:     #2B1D13;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--f-body);
+    font-size: 16px;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .shell { max-width: 1180px; margin: 0 auto; padding: 0 24px 96px; }
+
+  /* masthead */
+
+  .masthead { padding: 56px 0 34px; border-bottom: 2px solid var(--ink); }
+
+  .eyebrow {
+    font-family: var(--f-mono); font-size: 11px; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ink-faint); margin: 0 0 22px;
+  }
+
+  h1 {
+    font-family: var(--f-display); font-weight: 500;
+    font-size: clamp(2.9rem, 8vw, 5rem); line-height: 0.96;
+    letter-spacing: -0.02em; margin: 0; text-wrap: balance;
+  }
+
+  h1 em { font-style: italic; color: var(--accent); }
+
+  .standfirst {
+    font-family: var(--f-display); font-size: clamp(1.15rem, 2.4vw, 1.38rem);
+    line-height: 1.45; color: var(--ink-soft); max-width: 48ch; margin: 22px 0 0;
+  }
+
+  .masthead-meta {
+    display: flex; flex-wrap: wrap; gap: 8px 30px; margin-top: 30px;
+    font-family: var(--f-mono); font-size: 11.5px; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--ink-faint);
+  }
+  .masthead-meta b { color: var(--ink-soft); font-weight: 500; }
+
+  .notice {
+    margin-top: 34px; padding: 22px 26px;
+    background: var(--flag-wash); border-left: 3px solid var(--flag);
+  }
+  .notice p { margin: 0; max-width: var(--measure); font-size: 15px; color: var(--ink-soft); }
+  .notice strong { color: var(--ink); font-weight: 600; }
+
+  /* layout */
+
+  .body-grid { display: grid; grid-template-columns: 1fr; margin-top: 8px; }
+
+  @media (min-width: 960px) {
+    .body-grid { grid-template-columns: 186px minmax(0, 1fr); gap: 56px; align-items: start; }
+    .toc { position: sticky; top: 28px; }
+  }
+
+  .toc { padding-top: 46px; display: none; }
+  @media (min-width: 960px) { .toc { display: block; } }
+
+  .toc ol {
+    list-style: none; margin: 0; padding: 0;
+    display: flex; flex-direction: column; gap: 11px;
+    border-left: 1px solid var(--rule);
+  }
+  .toc a {
+    display: block; padding-left: 14px;
+    font-family: var(--f-mono); font-size: 11.5px; line-height: 1.35;
+    letter-spacing: 0.03em; color: var(--ink-faint); text-decoration: none;
+    border-left: 2px solid transparent; margin-left: -1px;
+  }
+  .toc a:hover, .toc a:focus-visible { color: var(--ink); border-left-color: var(--accent-bright); }
+
+  /* sections */
+
+  section { padding-top: 58px; scroll-margin-top: 20px; }
+
+  .sec-head {
+    display: flex; align-items: baseline; gap: 14px;
+    padding-bottom: 10px; border-bottom: 1px solid var(--rule); margin-bottom: 24px;
+  }
+  .sec-head span {
+    font-family: var(--f-mono); font-size: 11px; font-weight: 600;
+    letter-spacing: 0.1em; color: var(--accent); flex: none;
+  }
+  h2.sec-title {
+    font-family: var(--f-display); font-weight: 500;
+    font-size: clamp(1.5rem, 3.2vw, 1.95rem); line-height: 1.12;
+    letter-spacing: -0.015em; margin: 0; text-wrap: balance;
+  }
+
+  p { max-width: var(--measure); }
+  .lede { font-size: 17px; color: var(--ink-soft); margin: 0 0 22px; }
+
+  h3.sub {
+    font-family: var(--f-mono); font-size: 11px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint);
+    margin: 32px 0 12px;
+  }
+
+  /* verdict — the one-line answer at the top of a strategy section */
+
+  .verdict {
+    display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px;
+    padding: 16px 20px; background: var(--surface);
+    border-left: 2px solid var(--accent-bright); margin-bottom: 20px;
+  }
+  .verdict .label {
+    font-family: var(--f-mono); font-size: 10.5px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint);
+  }
+  .verdict .value {
+    font-family: var(--f-display); font-size: 1.5rem; font-weight: 500;
+    line-height: 1.15; color: var(--ink);
+  }
+  .verdict .value em { font-style: italic; color: var(--accent); }
+
+  /* big idea */
+
+  .bigidea {
+    padding: 34px 34px 30px; background: var(--surface-sunk);
+    border-top: 3px solid var(--accent-bright); margin-bottom: 26px;
+  }
+  .bigidea .sv {
+    font-family: var(--f-display); font-size: clamp(1.6rem, 4.2vw, 2.5rem);
+    line-height: 1.18; letter-spacing: -0.015em; margin: 0; max-width: 22ch;
+    text-wrap: balance;
+  }
+  .bigidea .en {
+    font-family: var(--f-mono); font-size: 12.5px; color: var(--ink-faint);
+    margin: 14px 0 0; letter-spacing: 0.02em;
+  }
+
+  /* quote / metaphor pull */
+
+  .pull {
+    padding: 22px 26px; background: var(--surface);
+    border-left: 2px solid var(--accent-bright); margin: 0 0 22px;
+  }
+  .pull .sv {
+    font-family: var(--f-display); font-style: italic; font-size: 1.24rem;
+    line-height: 1.45; margin: 0; max-width: 50ch; color: var(--ink);
+  }
+  .pull .en {
+    font-family: var(--f-mono); font-size: 12.5px; line-height: 1.55;
+    color: var(--ink-faint); margin: 12px 0 0; max-width: 58ch;
+  }
+
+  /* ordered mechanism steps */
+
+  .steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+  .steps li {
+    display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 16px;
+    padding: 16px 20px; background: var(--surface); max-width: none;
+  }
+  .steps li > .n {
+    font-family: var(--f-mono); font-size: 12px; font-weight: 600;
+    color: var(--accent); padding-top: 3px;
+  }
+  .steps li > div { max-width: var(--measure); }
+  .steps b { font-weight: 600; }
+
+  /* generic list */
+
+  .plain { display: flex; flex-direction: column; gap: 16px; margin: 0; padding-left: 20px; }
+  .plain li { max-width: var(--measure); }
+  .plain li::marker { color: var(--accent-bright); }
+  .plain b { display: block; font-weight: 600; color: var(--ink); }
+
+  /* tables */
+
+  .tablewrap { overflow-x: auto; margin: 0 0 8px; -webkit-overflow-scrolling: touch; }
+
+  table {
+    border-collapse: collapse; width: 100%; min-width: 520px;
+    font-size: 14.5px; line-height: 1.5;
+  }
+  th, td {
+    text-align: left; vertical-align: top;
+    padding: 12px 16px 12px 0; border-bottom: 1px solid var(--rule-soft);
+  }
+  th {
+    font-family: var(--f-mono); font-size: 10.5px; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint);
+    border-bottom: 1px solid var(--rule); white-space: nowrap;
+  }
+  td.num {
+    font-family: var(--f-mono); font-variant-numeric: tabular-nums;
+    color: var(--accent); font-weight: 600; width: 34px;
+  }
+  td strong { font-weight: 600; }
+
+  /* headline cards */
+
+  .heads { display: flex; flex-direction: column; gap: 2px; margin-bottom: 8px; }
+  .head {
+    display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 14px;
+    padding: 18px 22px; background: var(--surface);
+  }
+  .head .n {
+    font-family: var(--f-mono); font-size: 12px; font-weight: 600;
+    color: var(--ink-faint); padding-top: 5px;
+  }
+  .head .h {
+    font-family: var(--f-display); font-size: 1.28rem; line-height: 1.28;
+    font-weight: 500; margin: 0; max-width: 40ch; text-wrap: balance;
+  }
+  .head .s {
+    font-family: var(--f-mono); font-size: 12px; line-height: 1.55;
+    color: var(--ink-faint); margin: 8px 0 0; max-width: 60ch;
+  }
+
+  /* belief chain */
+
+  .chain { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+  .chain li {
+    display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 16px;
+    padding: 14px 0; border-bottom: 1px solid var(--rule-soft);
+    max-width: none;
+  }
+  .chain li .n {
+    font-family: var(--f-mono); font-size: 12px; font-weight: 600;
+    color: var(--ink-faint); font-variant-numeric: tabular-nums;
+  }
+  .chain li > div { max-width: var(--measure); }
+  .chain li.key { background: var(--accent-wash); padding-left: 16px; padding-right: 16px; }
+  .chain li.key .n { color: var(--accent); }
+  .chain .note {
+    display: block; font-family: var(--f-mono); font-size: 11.5px;
+    color: var(--accent); margin-top: 4px; letter-spacing: 0.03em;
+  }
+
+  /* funnel */
+
+  .funnel { display: flex; flex-direction: column; gap: 2px; }
+  .fstage { padding: 20px 24px; background: var(--surface); }
+  .fstage h4 {
+    font-family: var(--f-mono); font-size: 10.5px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent);
+    margin: 0 0 10px;
+  }
+  .fstage p { margin: 0 0 10px; }
+  .fstage p:last-child { margin-bottom: 0; }
+  .fstage ul { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 7px; }
+  .fstage li { max-width: var(--measure); }
+  .fstage li::marker { color: var(--ink-faint); }
+
+  /* flags */
+
+  .flag {
+    display: inline-block; font-family: var(--f-mono); font-size: 10px;
+    font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 2px 7px; background: var(--flag-wash); color: var(--flag);
+    white-space: nowrap;
+  }
+
+  .callout {
+    padding: 22px 26px; background: var(--flag-wash);
+    border-left: 3px solid var(--flag); margin: 20px 0;
+  }
+  .callout p { margin: 0 0 12px; color: var(--ink-soft); }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout strong { color: var(--ink); font-weight: 600; }
+
+  .closing {
+    margin-top: 22px; padding: 30px 32px;
+    background: var(--accent-wash); border-top: 2px solid var(--accent-bright);
+  }
+  .closing p { margin: 0 0 14px; }
+  .closing p:last-child { margin-bottom: 0; }
+  .closing strong { font-weight: 600; }
+
+  footer {
+    margin-top: 60px; padding-top: 22px; border-top: 1px solid var(--rule);
+    font-family: var(--f-mono); font-size: 11.5px; letter-spacing: 0.05em;
+    color: var(--ink-faint); display: flex; flex-wrap: wrap; gap: 6px 26px;
+  }
+
+  a:focus-visible, :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+</style>
+
+<div class="shell">
+
+  <header class="masthead">
+    <p class="eyebrow">Offer Brief · Bellenoor Retinal Shot · Sverige</p>
+    <h1>Ytfällan</h1>
+    <p class="standfirst">Every serum she ever bought was fighting the wrong battle. Not the wrong ingredient — the wrong depth.</p>
+    <div class="masthead-meta">
+      <span><b>Awareness</b> Solution-aware</span>
+      <span><b>Sophistication</b> Stage 4→5</span>
+      <span><b>Consciousness</b> Low</span>
+      <span><b>Traffic</b> Meta cold, SE</span>
+      <span><b>Version</b> v1 · Sept 2026</span>
+    </div>
+    <div class="notice">
+      <p>Built on the avatar sheet and the page audit. Anything marked <span class="flag">Verify</span> needs a real answer from you or from the Deep Research pass before it goes on a page — <strong>mostly because it's a claim about a person, a study or an origin, and those have to be true.</strong></p>
+    </div>
+  </header>
+
+  <div class="body-grid">
+
+    <nav class="toc" aria-label="Sections">
+      <ol>
+        <li><a href="#names">Product names</a></li>
+        <li><a href="#consciousness">Consciousness</a></li>
+        <li><a href="#awareness">Awareness</a></li>
+        <li><a href="#sophistication">Sophistication</a></li>
+        <li><a href="#bigidea">Big idea</a></li>
+        <li><a href="#metaphor">Metaphor</a></li>
+        <li><a href="#ump">UMP — the problem</a></li>
+        <li><a href="#ums">UMS — the solution</a></li>
+        <li><a href="#guru">Guru</a></li>
+        <li><a href="#discovery">Discovery story</a></li>
+        <li><a href="#product">Product</a></li>
+        <li><a href="#headlines">Headlines</a></li>
+        <li><a href="#objections">Objections</a></li>
+        <li><a href="#beliefs">Belief chains</a></li>
+        <li><a href="#funnel">Funnel</a></li>
+        <li><a href="#domains">Domains</a></li>
+        <li><a href="#swipes">Swipes</a></li>
+        <li><a href="#notes">Other notes</a></li>
+      </ol>
+    </nav>
+
+    <main>
+
+      <section id="names">
+        <div class="sec-head"><span>01</span><h2 class="sec-title">Potential product name ideas</h2></div>
+        <p class="lede"><strong>Keep "Retinal Shot."</strong> It's doing more work than you think: <em>shot</em> implies something delivered <em>into</em> you rather than rubbed <em>onto</em> you — which is the entire mechanism — plus speed and a dose. A name that already carries the mechanism is rare. Don't trade it away.</p>
+        <p>What actually needs naming is the <strong>mechanism</strong>, not the product.</p>
+        <div class="tablewrap">
+          <table>
+            <thead><tr><th>Slot</th><th>Options</th></tr></thead>
+            <tbody>
+              <tr><td>The problem (UMP)</td><td><strong>Ytfällan</strong> — the surface trap · Portvaktsproblemet · Ytbarriären</td></tr>
+              <tr><td>The solution (UMS)</td><td><strong>Shot-effekten</strong> · 200 000 mikrokanaler · Djupleverans</td></tr>
+              <tr><td>The bundles</td><td>1-pack <strong>Testa</strong> · 2-pack <strong>Se skillnaden</strong> · 3-pack <strong>Hela hudskiftet</strong> — ties the tiers to the 8-week roadmap you already wrote</td></tr>
+              <tr><td>The routine</td><td><strong>Hudskiftet</strong> — "the skin shift." Names the 8 weeks as something she's <em>doing</em>, not a product she's using. Strong email-flow and retention asset.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="pull">
+          <p class="sv">"Det är ingen kräm. Det är en shot."</p>
+          <p class="en">Line worth owning outright.</p>
+        </div>
+      </section>
+
+      <section id="consciousness">
+        <div class="sec-head"><span>02</span><h2 class="sec-title">Level of consciousness</h2></div>
+        <div class="verdict">
+          <span class="label">Verdict</span>
+          <span class="value"><em>Low</em> — with one Swedish caveat</span>
+        </div>
+        <p>She's a 47-year-old working woman on Facebook, not a biohacker. She isn't reading studies, she doesn't know what retinaldehyde is, and she will not follow a chemistry argument. Write at a 7th-grade level. Short sentences, concrete pictures, story before science.</p>
+        <p><strong>The caveat that makes this market different:</strong> low consciousness normally licenses hype. Here it does the opposite — Swedish consumers are unusually hype-resistant, and overclaiming reads as a scam rather than as excitement.</p>
+        <p>So: <strong>low-consciousness structure, high-trust tone.</strong> Simple language, big emotion, calm delivery, honest numbers. The page that wins here is the one that says "vecka 1 kan huden bli lite torr" out loud.</p>
+      </section>
+
+      <section id="awareness">
+        <div class="sec-head"><span>03</span><h2 class="sec-title">Level of awareness</h2></div>
+        <div class="verdict">
+          <span class="label">Verdict</span>
+          <span class="value"><em>Solution-aware</em> · ~30% problem-aware</span>
+        </div>
+        <p>She knows vitamin A is "the thing that works for wrinkles." She's tried a version of it, or been scared off it. She does <strong>not</strong> know Bellenoor, and she does not know retinal is different from retinol.</p>
+        <p><strong>What this dictates about the lead:</strong> not a product lead ("Introducing Bellenoor Retinal Shot") and not a pure problem lead ("Do you have large pores?"). Solution-aware traffic converts on a <strong>mechanism lead</strong> — the new reason the thing she already believes in will finally work for her.</p>
+        <p>The problem-aware slice is served by the agitation block, not by the headline.</p>
+      </section>
+
+      <section id="sophistication">
+        <div class="sec-head"><span>04</span><h2 class="sec-title">Stage of sophistication</h2></div>
+        <div class="verdict">
+          <span class="label">Verdict</span>
+          <span class="value"><em>Stage 4</em>, tipping into 5</span>
+        </div>
+        <p>Every claim in this category has been made. "Reduces wrinkles," "smaller pores," "clinically proven," "professional results at home" — she has read all of it and none of it registers any more.</p>
+        <ul class="plain">
+          <li><b>Stage 3 tactics are dead here.</b> Saying "93%" louder makes it worse, not better.</li>
+          <li><b>Stage 4 is a new mechanism.</b> This is your play — 200 000 microneedles is a genuine differentiator she has not heard before.</li>
+          <li><b>Stage 5 is identification.</b> Where a market is exhausted even by mechanisms, you win on "this was written about me." Your page currently has zero identification. That's the gap.</li>
+        </ul>
+        <p style="margin-top:22px"><strong>Run 4 and 5 together: mechanism headline, identification body.</strong></p>
+        <div class="callout">
+          <p><strong>One useful asymmetry.</strong> Sweden runs roughly one stage behind the US and UK on DTC skincare advertising. A mechanism angle that's burned out in an American feed still has room here. That window closes — use it now.</p>
+        </div>
+      </section>
+
+      <section id="bigidea">
+        <div class="sec-head"><span>05</span><h2 class="sec-title">Big idea</h2></div>
+        <div class="bigidea">
+          <p class="sv">"Det var aldrig fel på ditt serum. Det kom bara aldrig in."</p>
+          <p class="en">It was never your serum's fault. It just never got in.</p>
+        </div>
+        <ol class="plain" style="padding-left:22px">
+          <li><b>It absolves her.</b> The avatar's frustration stage ends with her privately suspecting the problem is <em>her</em> — her age, her genes, her skin. This says: it wasn't you, and it wasn't even the products. It was physics. That release buys her attention immediately.</li>
+          <li><b>It turns every past failure into evidence for you.</b> The drawer of half-used serums stops being proof that nothing works and becomes proof that the mechanism matters.</li>
+          <li><b>It leads straight into the UMS.</b> The next sentence writes itself.</li>
+          <li><b>It's defensible.</b> Topical actives genuinely have poor penetration through the stratum corneum — a real limitation, not an invented villain. <span class="flag">Verify §5.2</span></li>
+        </ol>
+        <h3 class="sub">Alternates worth testing</h3>
+        <div class="heads">
+          <div class="head"><span class="n">A</span><div><p class="h">"Din hud är byggd för att hålla saker ute. Det är därför krämen inte fungerade."</p><p class="s">Your skin is built to keep things out. That's why the cream didn't work.</p></div></div>
+          <div class="head"><span class="n">B</span><div><p class="h">"Problemet är inte din ålder. Problemet är djupet."</p><p class="s">The problem isn't your age. It's the depth.</p></div></div>
+          <div class="head"><span class="n">C</span><div><p class="h">"Alla vet att A-vitamin fungerar. Nästan ingen får in det."</p><p class="s">Everyone knows vitamin A works. Almost nobody gets it in.</p></div></div>
+        </div>
+      </section>
+
+      <section id="metaphor">
+        <div class="sec-head"><span>06</span><h2 class="sec-title">Metaphor</h2></div>
+        <div class="pull">
+          <p class="sv">"Att smörja in en vanlig kräm är som att vattna en växt genom att spreja bladen. Det ser rätt ut. Det känns rätt. Men det kommer aldrig ner till rötterna."</p>
+          <p class="en">Rubbing in an ordinary cream is like watering a plant by spraying the leaves. It looks right. It feels right. But it never reaches the roots.</p>
+        </div>
+        <p>Domestic, instantly legible to a 47-year-old, needs no science, and it maps exactly onto the mechanism: surface versus depth. It also carries the emotional payload — <em>she was doing everything right.</em></p>
+        <h3 class="sub">Supporting metaphors</h3>
+        <ul class="plain">
+          <li><b>The locked door.</b> Her barrier isn't broken, it's <em>working</em> — a door doing its job. The spicules aren't force, they're a key. Useful against the "is this safe?" objection: you're not breaking anything.</li>
+          <li><b>The message that never arrived.</b> Retinal isn't a substance that fills lines — it's an <em>instruction</em> to rebuild collagen. Skin cells stop receiving it with age. This is the message finally getting through.</li>
+          <li><b>A shot, not a cream.</b> Already carried by the product name. Deep, fast, dosed.</li>
+        </ul>
+      </section>
+
+      <section id="ump">
+        <div class="sec-head"><span>07</span><h2 class="sec-title">UMP — unique mechanism of the problem</h2></div>
+        <div class="verdict"><span class="label">Named</span><span class="value"><em>Ytfällan</em> — the surface trap</span></div>
+        <p class="lede">The story, in her language:</p>
+        <ol class="steps">
+          <li><span class="n">01</span><div>Your skin's number one job is to <b>keep things out</b>. It's a barrier, and it's very good at it.</div></li>
+          <li><span class="n">02</span><div>From around 40, cell turnover slows. Dead cells sit longer at the surface, the walls around each pore lose their support, and pores start to look bigger and deeper.</div></li>
+          <li><span class="n">03</span><div>Here's the trap: <b>the same slowdown that causes the problem also makes the barrier harder to get through.</b> The older you get, the more you need the active — and the less of it ever reaches the layer where collagen is made.</div></li>
+          <li><span class="n">04</span><div>Which means every serum you've bought has been fighting the wrong battle. Not the wrong ingredient — the wrong <b>depth</b>.</div></li>
+        </ol>
+        <h3 class="sub">Why this UMP fits the offer</h3>
+        <ul class="plain">
+          <li>It's new to her — nobody has explained her failures this way.</li>
+          <li>It isn't a conspiracy, so it survives Konsumentverket and Meta review.</li>
+          <li>It makes the solution <em>inevitable</em> rather than merely appealing. Once she accepts the trap, she needs delivery — and delivery is what you sell.</li>
+        </ul>
+        <p style="margin-top:20px"><span class="flag">Verify</span> Substantiation for the penetration limitation and for pore-wall and turnover changes with age — research §5.1, §5.2.</p>
+      </section>
+
+      <section id="ums">
+        <div class="sec-head"><span>08</span><h2 class="sec-title">UMS — unique mechanism of the solution</h2></div>
+        <div class="verdict"><span class="label">Named</span><span class="value"><em>Shot-effekten</em> · 200 000 mikrokanaler</span></div>
+        <ol class="steps">
+          <li><span class="n">01</span><div><b>The carriers.</b> 200 000 microscopic spicules — silica needles finer than your pores — suspended in the formula. You feel a slight prickle. That's them working.</div></li>
+          <li><span class="n">02</span><div><b>The passage.</b> They open temporary micro-channels through the surface layer. Not a wound — a doorway that closes on its own.</div></li>
+          <li><span class="n">03</span><div><b>The payload.</b> Pure vitamin A as <b>retinaldehyde</b> — one step from the active form your skin uses, where ordinary retinol needs two. It arrives at the depth where collagen is built instead of evaporating off the top.</div></li>
+          <li><span class="n">04</span><div><b>The buffer.</b> A 9-peptide complex and panthenol ride along, so you get retinal's force without prescription retinol's fallout.</div></li>
+        </ol>
+        <div class="pull" style="margin-top:22px">
+          <p class="sv">"Samma vitamin. Helt annan adress."</p>
+          <p class="en">Same vitamin. Completely different address.</p>
+        </div>
+        <div class="callout">
+          <p><span class="flag">Verify</span> <strong>This is the load-bearing claim of the entire offer.</strong> Research §5.1–5.2 has to confirm the penetration evidence — and you must reconcile the contradiction already live on your page: particles described as <em>"fem gånger mindre än en por"</em> in one section and <em>"16 gånger tunnare än dina porer"</em> in another. One number, everywhere.</p>
+        </div>
+      </section>
+
+      <section id="guru">
+        <div class="sec-head"><span>09</span><h2 class="sec-title">Guru</h2></div>
+        <div class="callout">
+          <p><strong>Unresolved — and the biggest liability in the offer.</strong> Your page names four experts (Dr. Anders Lindholm, Linnéa Sjögren, Malin Forsberg, Sofia Holmgren), each with a quote. If they're real, contracted advisors, this is an asset: strengthen it with credentials, photos and a link. If they aren't, they have to come out. Named medical professionals is the one category where invented proof stops being marketing. <span class="flag">Verify — founder decision, this week</span></p>
+        </div>
+        <h3 class="sub">Three routes, in order of preference</h3>
+        <ol class="plain" style="padding-left:22px">
+          <li><b>A real founder.</b> For this market, a Swedish woman in her forties who built this because nothing worked on her own skin outperforms any doctor. It fits the low-consciousness, high-trust profile exactly, it costs nothing, and it can't be falsified. If that's your actual story, it's the strongest option available.</li>
+          <li><b>One real dermatologist or hudterapeut</b>, properly contracted and named, replacing all four. One verifiable expert beats four unverifiable ones.</li>
+          <li><b>No guru — the mechanism is the hero.</b> Entirely viable. Spicules and retinaldehyde carry the offer alone, and it removes the risk completely.</li>
+        </ol>
+      </section>
+
+      <section id="discovery">
+        <div class="sec-head"><span>10</span><h2 class="sec-title">Discovery story</h2></div>
+        <p class="lede">The frame: <strong>two things that already worked, that nobody had put together.</strong></p>
+        <ul class="plain">
+          <li><b>In France</b>, dermatologists have used retinaldehyde for decades — the vitamin A one step from the active form, chosen because it delivers results with far less irritation than prescription retinoids. It never got the marketing budget retinol got, so most people have never heard of it. <span class="flag">Verify §3.3</span></li>
+          <li><b>In Korea</b>, clinics use spicules — microscopic silica needles from freshwater sponges, structures that have existed for hundreds of millions of years — to carry actives past the skin barrier without a needle. <span class="flag">Verify §3.4</span></li>
+        </ul>
+        <p style="margin-top:20px">Nobody had put the gentle molecule inside the delivery system and made it a two-minute evening routine for a woman at home. That's the product.</p>
+        <p><strong>Structure it as three beats:</strong> she tried everything and blamed herself → she found the two pieces → she put them together. Beat one is missing from your page entirely, and it's the beat that makes the reader stay.</p>
+        <div class="callout">
+          <p><span class="flag">Verify</span> Only publish this as an origin story if it is your actual origin story. If it isn't, run it as an <strong>ingredient</strong> story — "två upptäckter, två världsdelar" — same information, no fabricated biography.</p>
+        </div>
+      </section>
+
+      <section id="product">
+        <div class="sec-head"><span>11</span><h2 class="sec-title">Product</h2></div>
+        <div class="tablewrap">
+          <table>
+            <tbody>
+              <tr><th style="width:150px">What it is</th><td>Retinal serum, duo set — 2 tubes × 15 ml</td></tr>
+              <tr><th>Active</th><td>0.1% retinaldehyde, encapsulated, delivered by ~200 000 spicules</td></tr>
+              <tr><th>Support</th><td>9-peptide complex (elasticity), panthenol (barrier, calming)</td></tr>
+              <tr><th>Free from</th><td>Fragrance</td></tr>
+              <tr><th>Use</th><td>One small drop, evenings. 2–3 nights/week for weeks 1–3, building to 5–6 by week 8. SPF every morning.</td></tr>
+              <tr><th>Timeline</th><td>Pores 1–2 weeks · fine lines and firmness 4–8 weeks · compounding after</td></tr>
+              <tr><th>Price</th><td>349 kr (1) · 529 kr (2, save 169) · 698 kr (3, save 349 + free SPF 50 worth 199 kr)</td></tr>
+              <tr><th>Guarantee</th><td>60 days, money back</td></tr>
+              <tr><th>Shipping</th><td>Free within Sweden, EU warehouse, tracked</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout">
+          <p><strong>Gaps to close before the next round of copy:</strong></p>
+          <p><strong>How many nights does one tube last?</strong> It's nowhere on the page. Without it she can't do the value math and you can't say "under X kr per kväll" — which is the single strongest line available against the clinic comparison.</p>
+          <p>Full INCI list is absent despite the page claiming full transparency. And the return terms are unstated: does she pay return shipping, and can she return an opened tube?</p>
+        </div>
+      </section>
+
+      <section id="headlines">
+        <div class="sec-head"><span>12</span><h2 class="sec-title">Headline &amp; subheadline ideas</h2></div>
+
+        <h3 class="sub">Mechanism leads — primary, for solution-aware cold traffic</h3>
+        <div class="heads">
+          <div class="head"><span class="n">01</span><div><p class="h">"Det var aldrig fel på ditt serum. Det kom bara aldrig in."</p><p class="s">Sub: 200 000 mikronålar bär rent A-vitamin förbi ytan — dit vanliga krämer aldrig når.</p></div></div>
+          <div class="head"><span class="n">02</span><div><p class="h">"Din hud är byggd för att hålla saker ute. Det är därför krämen inte fungerade."</p><p class="s">Sub: Och det är precis det Retinal Shot är byggd för att komma runt.</p></div></div>
+          <div class="head"><span class="n">03</span><div><p class="h">"Samma vitamin. Helt annan adress."</p><p class="s">Sub: Rent A-vitamin, levererat på djupet av 200 000 mikronålar. Inte en kräm — en shot.</p></div></div>
+          <div class="head"><span class="n">04</span><div><p class="h">"Anledningen till att dina porer inte krymper har inget med din ålder att göra."</p><p class="s">Sub: Det handlar om djup. Och om varför nästan inget du köpt någonsin kommit dit.</p></div></div>
+        </div>
+
+        <h3 class="sub">Identification leads — Stage 5, test against the above</h3>
+        <div class="heads">
+          <div class="head"><span class="n">05</span><div><p class="h">"Du ser okej ut i spegeln. Sen ser du ett foto."</p><p class="s">Sub: Porerna. Linjerna. Att alla frågar om du är trött när du inte är det.</p></div></div>
+          <div class="head"><span class="n">06</span><div><p class="h">"Alla säger att du ser trött ut. Du är inte trött."</p><p class="s">Sub: Så här får du tillbaka en hud som matchar hur du faktiskt känner dig.</p></div></div>
+        </div>
+
+        <h3 class="sub">Comparison / villain leads</h3>
+        <div class="heads">
+          <div class="head"><span class="n">07</span><div><p class="h">"En klinik tjänar inte pengar på att din hud blir bättre. Den tjänar pengar på att du kommer tillbaka."</p><p class="s">Sub: Retinal Shot kostar 349 kr och gör jobbet varje kväll, hemma.</p></div></div>
+          <div class="head"><span class="n">08</span><div><p class="h">"Botox fryser. Recept-retinol flagar. Det här gör varken eller."</p></div></div>
+        </div>
+
+        <h3 class="sub">Product / offer leads — retargeting and warm traffic only</h3>
+        <div class="heads">
+          <div class="head"><span class="n">09</span><div><p class="h">"Inte en kräm. En shot."</p></div></div>
+          <div class="head"><span class="n">10</span><div><p class="h">"2 minuter på kvällen. Din hud gör resten medan du sover."</p></div></div>
+        </div>
+      </section>
+
+      <section id="objections">
+        <div class="sec-head"><span>13</span><h2 class="sec-title">Objections</h2></div>
+        <p class="lede">Every one, ranked by how much revenue it costs you.</p>
+        <div class="tablewrap">
+          <table>
+            <thead><tr><th>#</th><th>Objection</th><th>Answered now?</th><th>What it needs</th></tr></thead>
+            <tbody>
+              <tr><td class="num">1</td><td><strong>"Nothing has ever worked, why would this?"</strong></td><td>Nowhere</td><td>The UMP. This is the entire reason the big idea exists.</td></tr>
+              <tr><td class="num">2</td><td><strong>"I'll peel and everyone at work will see"</strong></td><td>FAQ ×4, roadmap</td><td>Reframe as a <strong>social</strong> fear, not a skin one: nobody will see it, start on a Friday, here's exactly what week 1 looks like</td></tr>
+              <tr><td class="num">3</td><td>"Is this just another dropship scam?"</td><td>No</td><td>Swedish company details, org.nr, address, support email, Trustpilot</td></tr>
+              <tr><td class="num">4</td><td>"Too strong for my sensitive skin"</td><td>Yes, well</td><td>Surface it higher on the page</td></tr>
+              <tr><td class="num">5</td><td>"349 kr is a lot for a maybe"</td><td>Guarantee only</td><td><strong>Cost per night</strong> — blocked until you know how long a tube lasts</td></tr>
+              <tr><td class="num">6</td><td>"It's too late for me, it's just age"</td><td>One buried FAQ line</td><td>Promote it. "De som burit på porer längst ser ofta tydligast skillnad" is your best sentence.</td></tr>
+              <tr><td class="num">7</td><td>"I've never heard of this brand"</td><td>No</td><td>Founder, org details, real UGC</td></tr>
+              <tr><td class="num">8</td><td>"I won't stick to it"</td><td>Roadmap, steps</td><td>Explicitly forgive missed nights; say the routine is 2 minutes</td></tr>
+              <tr><td class="num">9</td><td>"Will the guarantee actually be honored?"</td><td>Stated ×4</td><td>The mechanics: who pays return shipping, opened tube accepted, refund timing</td></tr>
+              <tr><td class="num">10</td><td>"Retinol makes you sun-sensitive"</td><td>Steps, FAQ</td><td>The free SPF on the 3-pack already answers this — say so out loud</td></tr>
+              <tr><td class="num">11</td><td><strong>"How long does one tube last?"</strong></td><td><strong>Nowhere</strong></td><td>Answer it</td></tr>
+              <tr><td class="num">12</td><td>"What's actually in it?"</td><td>Partial</td><td>Full INCI</td></tr>
+              <tr><td class="num">13</td><td>"Am I too young / too old?"</td><td>No</td><td>A short "passar dig om / passar inte dig om" block</td></tr>
+              <tr><td class="num">14</td><td>"Will it work with my routine?"</td><td>No</td><td>One line on layering and what not to combine it with</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="beliefs">
+        <div class="sec-head"><span>14</span><h2 class="sec-title">Belief chains</h2></div>
+        <p class="lede">She has to move through these in order. Skip one and the sale dies there — which is also the running order of the sales page.</p>
+        <ol class="chain">
+          <li><span class="n">01</span><div>My pores and lines are real, they're getting worse, and other people see them.</div></li>
+          <li class="key"><span class="n">02</span><div>It isn't my fault, and it isn't too late.<span class="note">The emotional unlock. Everything after this fails without it — and your page never establishes it.</span></div></li>
+          <li><span class="n">03</span><div>The reason nothing worked is <strong>delivery</strong>, not ingredients. <span class="note">← UMP</span></div></li>
+          <li><span class="n">04</span><div>Vitamin A is the right ingredient, and retinal is the right form — stronger than retinol, gentler than prescription.</div></li>
+          <li><span class="n">05</span><div>This product actually gets it deeper. <span class="note">← UMS</span></div></li>
+          <li><span class="n">06</span><div>It won't wreck my face — and if my skin reacts, that's expected, temporary, and I was warned honestly.</div></li>
+          <li><span class="n">07</span><div>It works on skin like mine, at my age.</div></li>
+          <li><span class="n">08</span><div>I'll know whether it's working, and roughly when. <span class="note">← the roadmap</span></div></li>
+          <li><span class="n">09</span><div>This is a real company that will actually refund me.</div></li>
+          <li class="key"><span class="n">10</span><div>The routine takes 8+ weeks, so buying one tube is the expensive way to do this.<span class="note">The bundle argument — currently presented as a discount when it should be presented as a conclusion, and it must come after belief 08.</span></div></li>
+          <li><span class="n">11</span><div>Waiting costs me more than starting.</div></li>
+        </ol>
+      </section>
+
+      <section id="funnel">
+        <div class="sec-head"><span>15</span><h2 class="sec-title">Funnel architecture</h2></div>
+        <div class="funnel">
+
+          <div class="fstage">
+            <h4>Now — fix the page you have</h4>
+            <p>Meta cold → rebuilt PDP → checkout → post-purchase upsell → email/SMS.</p>
+            <ul>
+              <li>Mechanism headline above the buy box</li>
+              <li>"Känner du igen dig?" agitation block before any chemistry</li>
+              <li>UMP → UMS → proof → roadmap, in that order</li>
+              <li>Bundle ladder argued <em>after</em> the proof, not before it</li>
+              <li>CTA repeated after every proof block</li>
+              <li>Klarna prominent at checkout — it's the default Swedish payment mindset</li>
+              <li>Post-purchase upsell: SPF 50, or a third tube at a one-time price</li>
+              <li>Email/SMS running the 8-week roadmap as a nurture sequence — day 0 how to start · day 3 the tingle is normal · day 7 don't quit · day 14 check your nose · day 30 increase · day 50 reorder</li>
+            </ul>
+          </div>
+
+          <div class="fstage">
+            <h4>Next — the test that matters</h4>
+            <p>Advertorial pre-sell against direct-to-PDP. For a solution-aware, sceptical, low-consciousness audience an advertorial usually wins, because the UMP needs room to land before any product appears.</p>
+            <p>Working title: <strong>"Därför fungerade aldrig ditt serum — förklarat av en hudterapeut."</strong> <span class="flag">Verify — only if a real hudterapeut writes or approves it</span></p>
+          </div>
+
+          <div class="fstage">
+            <h4>Later — the leak you haven't plugged</h4>
+            <p>There is <strong>no subscription</strong>. You sell a consumable, your own copy says stopping returns her to baseline within 2–3 months, and you're leaving the repeat revenue on the table. A "Hudskiftet" subscription — ships every 8 weeks, 15% off, cancel anytime — fits the offer's own logic. Retention here is worth more than any headline test.</p>
+          </div>
+
+        </div>
+      </section>
+
+      <section id="domains">
+        <div class="sec-head"><span>16</span><h2 class="sec-title">Potential domains</h2></div>
+        <p class="lede">For the advertorial or a standalone funnel. <span class="flag">Verify</span> None checked for availability — I can't reach registrars from here.</p>
+        <div class="tablewrap">
+          <table>
+            <tbody>
+              <tr><th style="width:210px">retinalshot.se</th><td>Cleanest, matches the product</td></tr>
+              <tr><th>hudskiftet.se</th><td>"The skin shift" — matches the routine name, works as an email brand</td></tr>
+              <tr><th>ytfallan.se</th><td>Matches the UMP; strong for an advertorial specifically</td></tr>
+              <tr><th>intekram.se</th><td>"Not a cream" — provocative, memorable</td></tr>
+              <tr><th>200000mikronalar.se</th><td>Mechanism as domain. Long, but unforgettable</td></tr>
+              <tr><th>bellenoor.se/hudskiftet</th><td>Costs nothing and inherits whatever trust the domain has already built</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="swipes">
+        <div class="sec-head"><span>17</span><h2 class="sec-title">Examples &amp; swipes</h2></div>
+        <h3 class="sub">Direct competitors — mine their 1-star reviews above all</h3>
+        <p>Those reviews are the promises your competitors are failing to keep, which is your list of things to promise.</p>
+        <ul class="plain">
+          <li><b>Medik8 Crystal Retinal</b> — the retinaldehyde benchmark; the strength-ladder offer structure is worth studying</li>
+          <li><b>Avène RetrinAL</b> — decades of retinaldehyde positioning, gentle-authority tone</li>
+          <li><b>The Ordinary Retinal 0.2%</b> — the price anchor she'll compare you against</li>
+          <li><b>Korean spicule brands</b> (VT Cosmetics, Medicube) — how the microneedle sensation gets described to a consumer</li>
+        </ul>
+        <h3 class="sub">Funnel and structure swipes</h3>
+        <ul class="plain">
+          <li><b>US anti-ageing VSL funnels</b> — Beverly Hills MD, City Beauty, Genucel — for UMP/UMS construction and belief-chain sequencing. Swipe the <em>architecture</em>, never the claims; that category's compliance posture will not survive in Sweden.</li>
+          <li><b>Musely / Hers tretinoin funnels</b> — for how they handle the purge objection, which is your #2</li>
+          <li><b>Verso and Skinome</b> — how a Swedish skincare brand sounds credible without hype. Read these before writing a word of body copy.</li>
+        </ul>
+        <div class="callout">
+          <p><strong>Your own best asset:</strong> the Meta ad comments on the <code>rs test</code> campaign. Real objections, real language, real market, free.</p>
+        </div>
+      </section>
+
+      <section id="notes">
+        <div class="sec-head"><span>18</span><h2 class="sec-title">Other notes</h2></div>
+
+        <h3 class="sub">Fix before spending more on traffic</h3>
+        <ol class="plain" style="padding-left:22px">
+          <li>The mechanism contradicts itself — "fem gånger mindre än en por" vs "16 gånger tunnare än dina porer." Pick one.</li>
+          <li>Four different usage schedules across steps, roadmap, research section and frequency block. Pick one; the FAQ version is best.</li>
+          <li>"Studier på Bellenoor Retinal Shot har följt användare i upp till 36 månader" — on a product created in Shopify on 2026-08-19. Remove, or reframe to ingredient-level research.</li>
+          <li>93 / 89 / 91 / 94% are unsourced. Source them or soften them.</li>
+          <li>The advisory board. Verify or remove.</li>
+          <li>Testimonial dates (feb–mars 2026) predate the product.</li>
+          <li>Two "Steg 4"s in the how-to-use section · "det är A-Shot" in the safety FAQ, left over from another product name · "Vi bevisar dom" → "dem" in the credibility heading.</li>
+        </ol>
+
+        <h3 class="sub">Assets that would move the number most, in order</h3>
+        <ol class="plain" style="padding-left:22px">
+          <li>Real before/after photos with a week counter, from real customers, with consent</li>
+          <li>Real Swedish UGC video — a woman in her forties, unpolished, in her own bathroom</li>
+          <li>Cost-per-night math, blocked on knowing how long a tube lasts</li>
+          <li>A "vecka 1 ser ut så här" honesty block — the thing no competitor will do</li>
+        </ol>
+
+        <div class="closing">
+          <p><strong>Strategic note.</strong> Your genuine edge in this market isn't the formula — Medik8 has a stronger one at four times the price.</p>
+          <p>It's that you are willing to tell a Swedish woman the truth about the first two weeks. In a Stage 4/5 market where every competitor is claiming effortless transformation, <strong>honesty is the differentiator that can't be copied without giving up the claim.</strong></p>
+          <p>Build the offer on it.</p>
+        </div>
+      </section>
+
+      <footer>
+        <span>Bellenoor Retinal Shot</span>
+        <span>Offer brief v1</span>
+        <span>September 2026</span>
+        <span>Verify-flagged claims are not cleared for publication</span>
+      </footer>
+
+    </main>
+  </div>
+</div>
