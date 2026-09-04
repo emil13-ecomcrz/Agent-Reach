@@ -36,6 +36,7 @@ before anything else on the page can work.
 | `04-deep-research-prompt.md` | The research still to be run, as a prompt for a deep-research tool | **Not yet run.** Contains no findings. |
 | `05-page-audit.md` | What the live page does today and what's wrong with it, ranked | Current as of 3 Sept 2026. |
 | `06-current-page-copy.md` | The live page's Swedish copy, verbatim, section by section | Source material. Contains claims that are flagged as unsupported. |
+| `07-mechanism-leads.md` | Papers to read for the mechanism claims, plus claim-by-claim status | **Leads only — nothing in it is verified.** No paper has been read from source. |
 
 PDF and HTML versions of files 01–04 exist in this folder for reading and sharing. **The `.md`
 files are the source of truth** — if the two disagree, the markdown is correct.
